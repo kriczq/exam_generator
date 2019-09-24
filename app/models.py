@@ -28,6 +28,7 @@ class Question(db.Model):
             'tags': [t.serialize for t in self.tags]
         }
 
+
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(64), nullable=False)
@@ -41,6 +42,7 @@ class Answer(db.Model):
             'text': self.text,
             'correct': self.correct
         }
+
 
 class Tag(db.Model):
     name = db.Column(db.String(64), primary_key=True)

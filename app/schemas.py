@@ -40,7 +40,8 @@ class QuestionSchema(ma.Schema):
     
     @validates_schema()
     def validate_answers(self, data, **kwargs):
-        if data['is_open'] and len(data['answers']) < 2:
+        print(data)
+        if not data['is_open'] and len(data['answers']) < 2:
             raise ValidationError('Closed question must have at least two answers')
 
 class GenerateExamSchema(ma.Schema):

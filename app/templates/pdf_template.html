@@ -1,22 +1,40 @@
 <html>
     <head>
-      <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+        <style>
+            @page {
+                size: a4;
+                margin: 1cm;
+            }
+
+            @font-face {
+                font-family: DejaVu;
+                src: url(pdf_font/DejaVuSans.ttf);
+            }
+
+            html {
+                font-family: DejaVu;
+                font-size: 11pt;
+            }
+          </style>
     </head>
     <body>
-        <div style="display: inline-block; font-size: 14px;">Imię i nazwisko</div>
-        <div style="float: right; font-size: 14px;">Grupa 1</div>
+        <div style="float: right; font-size: 12px;">Grupa {{ group }}</div>
+        <div style="display: inline-block; font-size: 16px;">Imię i nazwisko:</div>
         {% for question in questions %}
-            <p style="font-size: 16px; margin-bottom: 0;">{{ question.text }}</p>
-            {% for answer in question.answers %}
-            <table>
-                <tr>
-                  <td style="width: 12px;">
-                    <table><tr><td style="border: 1px solid black; height: 12px; width: 12px;"></td></tr></table>
-                  </td>
-                  <td style="padding-left: 10px; padding-top: 3px; font-size: 14px;">{{ answer.text }}</div></td>
-                </tr>
-              </table>
-            {% endfor %}
+            <p style="font-size: 16px; margin-bottom: {% if question.is_open %}100px{% else %}0{% endif %};">{{ question.text }}</p>
+            {% if not question.is_open %}
+                {% for answer in question.answers %}
+                <table>
+                    <tr>
+                      <td style="width: 12px;">
+                        <table><tr><td style="border: 1px solid black; height: 12px; width: 12px;"></td></tr></table>
+                      </td>
+                      <td style="padding-left: 10px; padding-top: 4px; font-size: 14px;">{{ answer.text }}</div></td>
+                    </tr>
+                  </table>
+                {% endfor %}
+            {% endif %}
         {% endfor %}
     </body>
 </html>
