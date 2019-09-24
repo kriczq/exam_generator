@@ -1,0 +1,22 @@
+<html>
+    <head>
+      <meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+    </head>
+    <body>
+        <div style="display: inline-block; font-size: 14px;">Imię i nazwisko</div>
+        <div style="float: right; font-size: 14px;">Grupa 1</div>
+        {% for question in questions %}
+            <p style="font-size: 16px; margin-bottom: 0;">{{ question.text }}</p>
+            {% for answer in question.answers %}
+            <table>
+                <tr>
+                  <td style="width: 12px;">
+                    <table><tr><td style="border: 1px solid black; height: 12px; width: 12px;"></td></tr></table>
+                  </td>
+                  <td style="padding-left: 10px; padding-top: 3px; font-size: 14px;">{{ answer.text }}</div></td>
+                </tr>
+              </table>
+            {% endfor %}
+        {% endfor %}
+    </body>
+</html>
