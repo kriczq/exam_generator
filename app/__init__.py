@@ -4,9 +4,11 @@ from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate
 from flask_cors import CORS
 
+
 db = SQLAlchemy()
 migrate = Migrate()
 ma = Marshmallow()
+
 
 def create_app(object_name):
     app = Flask(__name__)

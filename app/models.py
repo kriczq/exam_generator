@@ -3,9 +3,9 @@ from sqlalchemy.orm import backref, validates
 
 
 association_table = db.Table('association', db.Model.metadata,
-    db.Column('question_id', db.Integer, db.ForeignKey('question.id')),
-    db.Column('tag_name', db.Integer, db.ForeignKey('tag.name'))
-)
+                             db.Column('question_id', db.Integer, db.ForeignKey('question.id')),
+                             db.Column('tag_name', db.Integer, db.ForeignKey('tag.name')))
+
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,7 +18,7 @@ class Question(db.Model):
         back_populates="questions",
         single_parent=True,
         cascade="all, delete-orphan")
-    
+
     @property
     def serialize(self):
         return {
@@ -51,15 +51,15 @@ class Tag(db.Model):
         secondary=association_table,
         back_populates="tags")
 
-    def __init__(self, name): 
+    def __init__(self, name):
         self.name = name
 
     def __eq__(self, other):
         return self.name == other.name
 
     def __hash__(self):
-      return hash(self.name)
-    
+        return hash(self.name)
+
     @property
     def serialize(self):
         return self.name
