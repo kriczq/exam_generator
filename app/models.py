@@ -1,5 +1,6 @@
 from app import db
 from sqlalchemy.orm import backref, validates
+from sqlalchemy import event
 
 
 association_table = db.Table('association', db.Model.metadata,
@@ -63,3 +64,11 @@ class Tag(db.Model):
     @property
     def serialize(self):
         return self.name
+
+
+@event.listens_for(db.Model.metadata, 'after_create')
+def receive_after_create(target, connection, tables, **kw):
+    print("db creation")
+    q = Question(text="fdsfdsa", is_open=True, answers=[], tags=[])
+    db.session.add(q)
+    db.session.commit()

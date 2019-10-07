@@ -35,19 +35,13 @@ def add_question():
         return {'error': 'No input data provided'}, 400
 
     try:
-        data = question_schema.load(json_data)
+        question = question_schema.load(json_data)
     except ValidationError as e:
         return {'error': e.messages}, 422
 
-    if data['is_open']:
-        q = Question(text=data['text'], is_open=True, tags=data['tags'])
-    else:
-        q = Question(text=data['text'],
-                     answers=data['answers'],
-                     tags=data['tags'])
-    db.session.add(q)
+    db.session.add(question)
     db.session.commit()
-    return make_response(q, 201)
+    return make_response(question, 201)
 
 
 @questions_api.route('/<int:question_id>', methods=['PUT'])

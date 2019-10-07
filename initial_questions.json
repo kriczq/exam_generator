@@ -1,0 +1,76 @@
+[
+  {
+    "text": "Czy python jest interpretowany?",
+    "answers": [
+      {
+        "correct": true,
+        "text": "tak"
+      },
+      {
+        "correct": false,
+        "text": "nie"
+      }
+    ],
+    "tags": [
+      {
+        "name": "python"
+      }
+    ]
+  },
+  {
+    "text": "Jaka metoda dodaje element do listy?",
+    "answers": [
+      {
+        "correct": true,
+        "text": "append"
+      },
+      {
+        "correct": false,
+        "text": "delete"
+      },
+      {
+        "correct": false,
+        "text": "str"
+      },
+      {
+        "correct": false,
+        "text": "repr"
+      },
+      {
+        "correct": false,
+        "text": "add"
+      }
+    ],
+    "tags": [
+      {
+        "name": "python"
+      }
+    ]
+  },
+  {
+    "text": "Po jakiej klasie dziedziczą wszystkie wyjątki?",
+    "answers": [
+      {
+        "correct": true,
+        "text": "BaseException"
+      },
+      {
+        "correct": false,
+        "text": "Exception"
+      },
+      {
+        "correct": false,
+        "text": "Error"
+      },
+      {
+        "correct": false,
+        "text": "IOError"
+      }
+    ],
+    "tags": [
+      {
+        "name": "python"
+      }
+    ]
+  }
+]

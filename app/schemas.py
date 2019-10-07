@@ -30,7 +30,7 @@ class TagSchema(ma.ModelSchema):
             raise ValidationError('Nazwa tagu nie może przekraczać 64 znaków')
 
 
-class QuestionSchema(ma.Schema):
+class QuestionSchema(ma.ModelSchema):
     class Meta:
         model = Question
         fields = ('id', 'text', 'is_open', 'tags', 'answers')
@@ -53,7 +53,7 @@ class QuestionSchema(ma.Schema):
 
     @validates_schema()
     def validate_answers(self, data, **kwargs):
-        if not data['is_open']:
+        if not data.get('is_open', False):
             if len(data['answers']) < 2:
                 raise ValidationError('Pytanie musi mieć co najmniej dwie odpowiedzi')
 

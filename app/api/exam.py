@@ -3,6 +3,7 @@ from app.models import Question, Answer, Tag
 from app import db
 from flask import request, json, Response, Blueprint, jsonify, render_template, url_for
 from sqlalchemy.sql import func
+from sqlalchemy.orm.session import make_transient
 from app.helpers import convertHtmlToPdf
 from marshmallow import ValidationError
 import uuid
@@ -13,6 +14,7 @@ from app.schemas import QuestionSchema, GenerateExamSchema
 from app.helpers import make_response
 
 exam_api = Blueprint('exam', __name__, url_prefix='/exam')
+answers_per_question = 4
 
 
 def get_tags(tags_count, to_pick):
@@ -49,6 +51,18 @@ def rand_questions(tags, questions_number, rand_open=False):
                           .order_by(func.random())
                           .limit(tags_to_choose[i])
                           .all())
+
+    # for q in questions:
+    #     make_transient(q)
+
+    # if not rand_open:
+    #     for q in questions:
+    #         random.shuffle(q.answers)
+    #         del q.answers[answers_per_question:]
+
+    #         if (all(not a.correct for a in q.answers)):
+    #             print(q.answers)
+    #             q.answers[-1] = 'Żadna z powyższych odpowiedzi'
 
     return questions
 
