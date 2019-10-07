@@ -1,6 +1,7 @@
+from marshmallow import fields, ValidationError, validates, validates_schema
+
 from app import ma
 from app.models import Question, Answer, Tag
-from marshmallow import fields, ValidationError, validates, validates_schema
 
 
 class AnswerSchema(ma.ModelSchema):

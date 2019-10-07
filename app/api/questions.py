@@ -1,12 +1,10 @@
-from app.models import Question, Answer, Tag
-from app import db
-from flask import request, json, Response, Blueprint, jsonify, render_template, url_for
-from sqlalchemy.sql import func
-from marshmallow import ValidationError
-from app.schemas import QuestionSchema, GenerateExamSchema
-from app.helpers import make_response
+from flask import request, json, Response, Blueprint, jsonify
+from marshmallow import ValidationError, Schema, fields
 
-from marshmallow import Schema, fields
+from app import db
+from app.models import Question, Answer, Tag
+from app.schemas import QuestionSchema
+from app.helpers import make_response
 
 questions_api = Blueprint('questions', __name__, url_prefix='/questions')
 questions_list_schema = QuestionSchema(many=True)

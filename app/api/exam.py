@@ -1,15 +1,15 @@
-from app.app import app
-from app.models import Question, Answer, Tag
-from app import db
-from flask import request, json, Response, Blueprint, jsonify, render_template, url_for
-from sqlalchemy.sql import func
-from sqlalchemy.orm.session import make_transient
-from app.helpers import convertHtmlToPdf
-from marshmallow import ValidationError
 import uuid
 import os
-
 import random
+from flask import request, json, Response, Blueprint, render_template, url_for
+from sqlalchemy.sql import func
+from sqlalchemy.orm.session import make_transient
+from marshmallow import ValidationError
+
+from app import db
+from app.app import app
+from app.models import Question, Answer, Tag
+from app.helpers import convertHtmlToPdf
 from app.schemas import QuestionSchema, GenerateExamSchema
 from app.helpers import make_response
 

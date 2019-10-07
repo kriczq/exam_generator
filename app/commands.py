@@ -1,10 +1,9 @@
 import click
 import json
-
-from app.app import app
-from app import db
 from flask.cli import with_appcontext
 
+from app import db
+from app.app import app
 from app.models import Question
 from app.schemas import QuestionSchema
 
