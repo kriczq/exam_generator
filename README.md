@@ -1,8 +1,10 @@
-## Exam generator
+# Exam generator
 Aplikacja pozwala na dodawanie do bazy pytań, a następnie na podstawie dodanych pytań generowanie testów o zadanych parametrach
 
-# Jak uruchomić aplikację
+## Wymagania
 Aplikacja do działania wymaga zainstalowanego środowiska Python w wersji minimum 3.7
+
+## Jak uruchomić aplikację
 Aby uruchomić aplikację po raz pierwszy wpisz w terminalu poniższe komendy, które stworzą wirtualne środowisko oraz bazę danych:
 ```
 python3 -m venv venv
