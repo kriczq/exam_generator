@@ -10,9 +10,10 @@ class AnswerSchema(ma.ModelSchema):
     @validates('text')
     def validate_text(self, text):
         if len(text) == 0:
-            raise ValidationError('Answer must not be empty')
+            raise ValidationError('Odpowiedź nie może być pusta')
 
-        return text
+        if len(text) > 64:
+            raise ValidationError('Maksymalna długość odpowiedzi wynosi 64 znaki')
 
 
 class TagSchema(ma.ModelSchema):
@@ -23,9 +24,10 @@ class TagSchema(ma.ModelSchema):
     @validates('name')
     def validate_name(self, name):
         if len(name) == 0:
-            raise ValidationError('Tag name must not be empty')
+            raise ValidationError('Nazwa tagu nie może być pusta')
 
-        return name
+        if len(name) > 64:
+            raise ValidationError('Nazwa tagu nie może przekraczać 64 znaków')
 
 
 class QuestionSchema(ma.Schema):
@@ -39,13 +41,24 @@ class QuestionSchema(ma.Schema):
     @validates('text')
     def validate_text(self, text):
         if len(text) == 0:
-            raise ValidationError('Question must be not empty')
+            raise ValidationError('Pytanie nie może być puste')
+
+        if len(text) > 64:
+            raise ValidationError('Długość pytania nie może przekraczać 64 znaków')
+
+    @validates('tags')
+    def validate_text(self, tags):
+        if not tags:
+            raise ValidationError('Pytanie musi zawierać co najmniej jeden tag')
 
     @validates_schema()
     def validate_answers(self, data, **kwargs):
-        print(data)
-        if not data['is_open'] and len(data['answers']) < 2:
-            raise ValidationError('Closed question must have at least two answers')
+        if not data['is_open']:
+            if len(data['answers']) < 2:
+                raise ValidationError('Pytanie musi mieć co najmniej dwie odpowiedzi')
+
+            if len([x for x in data['answers'] if x.correct]) == 0:
+                raise ValidationError('Pytanie musi mieć co najmniej jedną poprawną odpowiedź')
 
 
 class GenerateExamSchema(ma.Schema):

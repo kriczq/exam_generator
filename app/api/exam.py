@@ -11,7 +11,7 @@ import os
 import random
 from app.schemas import QuestionSchema, GenerateExamSchema
 
-exam = Blueprint('exam', __name__, url_prefix='/exam')
+exam_api = Blueprint('exam', __name__, url_prefix='/exam')
 
 
 def get_tags(tags_count, to_pick):
@@ -52,7 +52,7 @@ def rand_questions(tags, questions_number, rand_open=False):
     return questions
 
 
-@exam.route('/generate', methods=['POST'])
+@exam_api.route('/generate', methods=['POST'])
 def generate_exam():
     json_data = request.get_json()
 
@@ -61,7 +61,7 @@ def generate_exam():
     try:
         data = generate_exam_schema.load(json_data)
     except ValidationError as e:
-        return e.messages, 422
+        return {'error': e.messages}, 422
 
     groups_number = data['groups_number']
     closed_questions_number = data['closed_questions_number']
@@ -85,7 +85,7 @@ def generate_exam():
             questions += rand_questions(tags, closed_questions_number)
             questions += rand_questions(tags, opened_questions_number, rand_open=True)
         except ValueError as e:
-            return {'error': 'there are not enough questions with given tags'}, 422
+            return {'error': 'Nie znaleziono wystarczającej liczby pytań w bazie dla podanych argumentów'}, 422
 
         file_name = 'grupa_{}.pdf'.format(i)
         convertHtmlToPdf(render_template('pdf_template.html', questions=questions, group=i), os.path.join(dir_path, file_name))

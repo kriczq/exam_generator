@@ -11,7 +11,9 @@ import os
 import random
 from app.schemas import QuestionSchema, GenerateExamSchema
 
+index_bp = Blueprint('index', __name__)
 
-@app.route('/', methods=['GET'])
+
+@index_bp.route('/', methods=['GET'])
 def index():
     return app.send_static_file('index.html')

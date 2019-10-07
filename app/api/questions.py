@@ -5,7 +5,9 @@ from sqlalchemy.sql import func
 from marshmallow import ValidationError
 from app.schemas import QuestionSchema, GenerateExamSchema
 
-questions = Blueprint('questions', __name__, url_prefix='/questions')
+from marshmallow import Schema, fields
+
+questions_api = Blueprint('questions', __name__, url_prefix='/questions')
 
 
 def serialize(obj):
@@ -25,25 +27,25 @@ def make_response(res, status_code):
         )
 
 
-questions_schema = QuestionSchema(many=True)
+questions_list_schema = QuestionSchema(many=True)
 question_schema = QuestionSchema()
 
 
-@questions.route('/', methods=['GET'])
+@questions_api.route('/', methods=['GET'])
 def all_questions():
     questions = Question.query.all()
 
-    return jsonify(questions_schema.dump(questions))
+    return jsonify(questions_list_schema.dump(questions))
 
 
-@questions.route('/<int:question_id>', methods=['GET'])
+@questions_api.route('/<int:question_id>', methods=['GET'])
 def get_question(question_id):
     question = Question.query.get(question_id)
 
     return question_schema.dump(question), 200
 
 
-@questions.route('/', methods=['POST'])
+@questions_api.route('/', methods=['POST'])
 def add_question():
     json_data = request.get_json()
 
@@ -53,9 +55,7 @@ def add_question():
     try:
         data = question_schema.load(json_data)
     except ValidationError as e:
-        return e.messages, 422
-    except AssertionError:
-        return {'error': str(e)}, 422
+        return {'error': e.messages}, 422
 
     if data['is_open']:
         q = Question(text=data['text'], is_open=True, tags=data['tags'])
@@ -68,7 +68,7 @@ def add_question():
     return make_response(q, 201)
 
 
-@questions.route('/<int:question_id>', methods=['PUT'])
+@questions_api.route('/<int:question_id>', methods=['PUT'])
 def update_question(question_id):
     question = Question.query.get(question_id)
     req = request.get_json()
@@ -102,7 +102,7 @@ def update_question(question_id):
     return make_response(question, 204)
 
 
-@questions.route('/<int:question_id>', methods=['DELETE'])
+@questions_api.route('/<int:question_id>', methods=['DELETE'])
 def delete_question(question_id):
     question = Question.query.get(question_id)
     db.session.delete(question)
