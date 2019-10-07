@@ -4,29 +4,11 @@ from flask import request, json, Response, Blueprint, jsonify, render_template, 
 from sqlalchemy.sql import func
 from marshmallow import ValidationError
 from app.schemas import QuestionSchema, GenerateExamSchema
+from app.helpers import make_response
 
 from marshmallow import Schema, fields
 
 questions_api = Blueprint('questions', __name__, url_prefix='/questions')
-
-
-def serialize(obj):
-    return obj.serialize
-
-
-def make_response(res, status_code):
-    if (res is not None):
-        return Response(
-            mimetype="application/json",
-            response=json.dumps(res, default=serialize),
-            status=status_code
-        )
-    else:
-        return Response(
-            status=status_code
-        )
-
-
 questions_list_schema = QuestionSchema(many=True)
 question_schema = QuestionSchema()
 
@@ -74,6 +56,7 @@ def update_question(question_id):
     req = request.get_json()
 
     question.text = req['text']
+    question.is_open = req['is_open']
     new_tags = []
 
     for tag in req['tags']:
@@ -86,17 +69,19 @@ def update_question(question_id):
             new_tags.append(Tag(name=tag_name))
 
     question.tags = new_tags
-    new_answers = []
 
-    for a in req['answers']:
-        a_obj = Answer(id=a.get('id', None), text=a['text'], correct=a['correct'])
+    if not question.is_open:
+        new_answers = []
 
-        if (a_obj.id):
-            a_obj = db.session.merge(a_obj)
+        for a in req['answers']:
+            a_obj = Answer(id=a.get('id', None), text=a['text'], correct=a['correct'])
 
-        new_answers.append(a_obj)
+            if (a_obj.id):
+                a_obj = db.session.merge(a_obj)
 
-    question.answers = new_answers
+            new_answers.append(a_obj)
+
+        question.answers = new_answers
 
     db.session.commit()
     return make_response(question, 204)

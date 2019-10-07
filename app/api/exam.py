@@ -10,6 +10,7 @@ import os
 
 import random
 from app.schemas import QuestionSchema, GenerateExamSchema
+from app.helpers import make_response
 
 exam_api = Blueprint('exam', __name__, url_prefix='/exam')
 
