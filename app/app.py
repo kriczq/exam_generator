@@ -1,17 +1,16 @@
 from app import create_app
 from config import Config
-from app.models import Question, Answer, Tag
 
 app = create_app(Config)
 
-from app.api.questions import questions_api
-from app.api.exam import exam_api
-from app.routes import index_bp
-from app import commands
+from app.controller.question_routes import questions_routes
+from app.controller.generator_routes import exam_generator_routes
+from app.controller.index_routes import index_routes
+from app.model import commands
 
-app.register_blueprint(index_bp)
-app.register_blueprint(questions_api)
-app.register_blueprint(exam_api)
+app.register_blueprint(index_routes)
+app.register_blueprint(questions_routes)
+app.register_blueprint(exam_generator_routes)
 
 
 if __name__ == '__main__':

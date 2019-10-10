@@ -9,7 +9,7 @@
 
             @font-face {
                 font-family: DejaVu;
-                src: url(pdf_font/DejaVuSans.ttf);
+                src: url({{ font_path }});
             }
 
             html {
@@ -22,7 +22,7 @@
         <div style="float: right; font-size: 12px;">Grupa {{ group }}</div>
         <div style="display: inline-block; font-size: 16px;">Imię i nazwisko:</div>
         {% for question in questions %}
-            <p style="font-size: 16px; margin-bottom: {% if question.is_open %}100px{% else %}0{% endif %};">{{ question.text }}</p>
+            <p style="font-size: 16px; margin-bottom: {% if question.is_open %}150px{% else %}0{% endif %};">{{ question.text }}</p>
             {% if not question.is_open %}
                 {% for answer in question.answers %}
                 <table>

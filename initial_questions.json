@@ -1,23 +1,5 @@
 [
   {
-    "text": "Czy python jest interpretowany?",
-    "answers": [
-      {
-        "correct": true,
-        "text": "tak"
-      },
-      {
-        "correct": false,
-        "text": "nie"
-      }
-    ],
-    "tags": [
-      {
-        "name": "python"
-      }
-    ]
-  },
-  {
     "text": "Jaka metoda dodaje element do listy?",
     "answers": [
       {
@@ -61,6 +43,50 @@
       {
         "correct": false,
         "text": "Error"
+      },
+      {
+        "correct": false,
+        "text": "IOError"
+      }
+    ],
+    "tags": [
+      {
+        "name": "python"
+      }
+    ]
+  },
+  {
+    "text": "Czy python jest interpretowany?",
+    "answers": [
+      {
+        "correct": true,
+        "text": "tak"
+      },
+      {
+        "correct": false,
+        "text": "nie"
+      }
+    ],
+    "tags": [
+      {
+        "name": "python"
+      }
+    ]
+  },
+  {
+    "text": "Jaki wyjątek jest rzucany przy braku klucza w słowniku?",
+    "answers": [
+      {
+        "correct": true,
+        "text": "KeyError"
+      },
+      {
+        "correct": false,
+        "text": "Exception"
+      },
+      {
+        "correct": false,
+        "text": "ValueError"
       },
       {
         "correct": false,

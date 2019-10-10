@@ -28,3 +28,12 @@ source venv/bin/activate
 export FLASK_APP=app/app.py
 flask run
 ```
+
+## Wykorzystane biblioteki
+* Flask 
+* SQLAlchemy
+* xhtml2pdf
+* Flask-marshmallow
+* Flask-migrate
+* Flask-cors
+* Flask-SQLAlchemy
